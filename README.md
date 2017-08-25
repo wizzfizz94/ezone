@@ -1,3 +1,4 @@
 # E-zone navigation
 
-- Indoor localisation and navigation technologies
+- Platform to upload, annotate and edit multistory floor plans
+- Includes basic routing information, and responding to quieries with annotaed maps.
