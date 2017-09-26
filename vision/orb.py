@@ -2,8 +2,8 @@ import numpy as np
 import cv2
 from matplotlib import pyplot as plt
 MIN_MATCH_COUNT = 9
-img1 = cv2.imread('door.png',cv2.IMREAD_GRAYSCALE)          # queryImage
-img2 = cv2.imread('door1.png',cv2.IMREAD_GRAYSCALE) # trainImage
+img1 = cv2.imread('images/box.png',cv2.IMREAD_GRAYSCALE)          # queryImage
+img2 = cv2.imread('images/box_in_scene.png',cv2.IMREAD_GRAYSCALE) # trainImage
 
 # Initiate SIFT detector
 orb = cv2.ORB_create()
