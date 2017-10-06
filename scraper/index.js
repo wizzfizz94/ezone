@@ -2,6 +2,8 @@ const puppeteer = require('puppeteer');
 const fs = require('fs');
 const mime = require('mime');
 const URL = require('url').URL;
+const fetch = require('node-fetch');
+const progressStream = require('progress-stream');
 
 (async() => {
   const browser = await puppeteer.launch();
@@ -38,7 +40,27 @@ const URL = require('url').URL;
     await page2.goto(
       `https://ecusis.ecu.edu.au/mapenquiry/getItemData.aspx?selected_map=${loc_code}1`,
       {waitUntil : "networkidle"})
-    console.log(await page2.plainText());
+    // console.log(await page2.plainText());
+
+    await page2.goto(
+      `https://ecusis.ecu.edu.au/SiSfm-data/Mapdata/${loc_code}1/${loc_code}1_2.swf`,
+      {waitUntil : "networkidle"})
+    let cookies = await page2.cookies();
+    let cookiesString = cookies.map(cookie =>{
+      return `${cookie.name}=${cookie.value}`
+    }).join('; ');
+    console.log(cookiesString);
+
+
+    const res = await fetch(
+      `https://ecusis.ecu.edu.au/SiSfm-data/Mapdata/${loc_code}1/${loc_code}1_2.swf`,
+      {
+      headers: {
+        Cookie: cookiesString
+      }
+    })
+    const buffer = await res.buffer();
+    fs.writeFileSync(`${loc_code}1.swf`, buffer);
   }
   //
   // console.log(itemdata);
